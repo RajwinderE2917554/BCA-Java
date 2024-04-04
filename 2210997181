@@ -1,0 +1,68 @@
+import java.util.ArrayList;
+
+public class Employee {
+    private String name;
+    private int eid;
+    
+    private double basicSalary;
+    private static final double HRA_PERCENTAGE = 0.20;
+    private static final double DA_PERCENTAGE = 0.25;
+    private static final double MA_AMOUNT = 300;
+
+    public Employee(String name, int eid, double basicSalary) {
+        this.name = name;
+        this.eid = eid;
+        this.basicSalary = basicSalary;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getEid() {
+        return eid;
+    }
+
+    public double getBasicSalary() {
+        return basicSalary;
+    }
+
+    public double calculateGrossSalary() {
+        double hra = basicSalary * HRA_PERCENTAGE;
+        double da = basicSalary * DA_PERCENTAGE;
+        return basicSalary + hra + da + MA_AMOUNT;
+    }
+
+    public static void main(String[] args) {
+        ArrayList<Employee> employees = new ArrayList<>();
+        employees.add(new Employee("John", 101, 25000));
+        employees.add(new Employee("Alice", 102, 18000));
+        employees.add(new Employee("Nancy", 103, 30000));
+        employees.add(new Employee("Eva", 104, 22000));
+        employees.add(new Employee("Neo", 105, 28000));
+        employees.add(new Employee("Nathan", 106, 21000));
+        employees.add(new Employee("Nick", 107, 27000));
+
+        System.out.println("Employees whose name starts with 'N':");
+        for (Employee employee : employees) {
+            if (employee.getName().toLowerCase().startsWith("n")) {
+                System.out.println("Name: " + employee.getName() + ", Gross Salary: " + employee.calculateGrossSalary());
+            }
+        }
+
+        System.out.println("\nEmployee with Eid 107:");
+        for (Employee employee : employees) {
+            if (employee.getEid() == 107) {
+                System.out.println("Eid: " + employee.getEid() + ", Gross Salary: " + employee.calculateGrossSalary());
+            }
+        }
+
+        int count = 0;
+        for (Employee employee : employees) {
+            if (employee.getBasicSalary() > 20000) {
+                count++;
+            }
+        }
+        System.out.println("\nTotal number of employees whose salary is more than 20000: " + count);
+    }
+}
