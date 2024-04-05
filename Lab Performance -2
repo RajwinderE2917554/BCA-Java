@@ -7,6 +7,187 @@ While implementing methods in the Car class, you find yourself needing to differ
 2.	Describe the significance of the this keyword in Java and how it differs from super. 
 Give examples demonstrating the use of this to refer to instance variables and methods within the same class, and discuss scenarios where using this is necessary for disambiguation or clarification.
 
+
+
+Task-1 Answer 
+
+Role and Usage of the super keyword in Java:
+
+The super keyword in Java is primarily used in the context of inheritance. It allows a subclass to access members (methods and variables) of its superclass. The key roles and usages of the super keyword are:
+
+Accessing superclass members: When a subclass overrides a method or hides a field of the superclass, the super keyword can be used to refer to the superclass version of the overridden method or hidden field.
+Invoking superclass constructors: In a subclass constructor, the super() statement can be used to explicitly call a constructor of the superclass. This is useful when the superclass constructor needs to be invoked 
+with specific arguments or when the subclass constructor does not explicitly call any superclass constructor (in which case, the default no-argument constructor of the superclass is called implicitly).
+
+
+
+class Vehicle {
+    int maxSpeed;
+
+    Vehicle(int maxSpeed) {
+        this.maxSpeed = maxSpeed;
+    }
+
+    void displaySpeed() {
+        System.out.println("Max speed: " + maxSpeed);
+    }
+}
+
+class Car extends Vehicle {
+    int numDoors;
+
+    Car(int maxSpeed, int numDoors) {
+        super(maxSpeed); // invoking superclass constructor
+        this.numDoors = numDoors;
+    }
+
+    void displayDetails() {
+        super.displaySpeed(); // accessing superclass method
+        System.out.println("Number of doors: " + numDoors);
+    }
+}
+
+
+
+
+
+
+
+Significance of the this keyword in Java and how it differs from super:
+
+The this keyword in Java is used to refer to the current object instance within a class. It has several uses:
+
+Referring to instance variables: this can be used to refer to instance variables of the current object, especially when there's a naming conflict between instance variables and method parameters or local variables.
+Invoking constructors: this() can be used to invoke another constructor within the same class. This is often used for constructor chaining, where one constructor calls another to avoid code duplication.
+Passing the current object as an argument: this can be passed as an argument to another method or constructor, particularly useful when initializing an object.
+
+In this example, this.model refers to the model instance variable of the Car class, distinguishing it from the model parameter of the constructor and the initialize method.
+The usage of super and this in Java provides clarity and flexibility in managing class inheritance and instance members.
+
+
+
+
+
+class Car {
+    String model;
+
+    Car(String model) {
+        this.model = model; // using this to refer to instance variable
+    }
+
+    void displayModel() {
+        System.out.println("Model: " + this.model); // using this to refer to instance variable
+    }
+
+    void initialize(String model) {
+        this.model = model; // using this to disambiguate instance variable from method parameter
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 Task-2: 
 a.	Recall the basic principles of exception handling in Java, give example of try-catch blocks and the handling of checked exception. 
 b.  Write a program to demonstrate Interface and implements multiple interface in a java.
+
+
+
+
+
+Task-2 Answer --->
+
+
+a. Basic Principles of Exception Handling in Java:
+
+Exception handling in Java allows developers to manage runtime errors gracefully, ensuring the stability of the program. Key principles include:
+
+Try-Catch Blocks: The try block encloses the code that might throw an exception. If an exception occurs within the try block, it's caught by the corresponding catch block.
+Checked vs Unchecked Exceptions: Checked exceptions are those that must be declared in the method signature or caught within a try-catch block, whereas unchecked exceptions
+(like NullPointerException or ArrayIndexOutOfBoundsException) don't need to be declared.
+Throwing Exceptions: Developers can manually throw exceptions using the throw keyword, allowing for custom exception handling.
+Finally Block: The finally block contains code that always executes, regardless of whether an exception is thrown or caught. It's typically used for cleanup operations.
+Example of Try-Catch Blocks Handling Checked Exception:
+
+
+
+
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        try {
+            File file = new File("example.txt");
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                System.out.println(line);
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + e.getMessage());
+        }
+    }
+}
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+b. Program Demonstrating Interface and Implementing Multiple Interfaces in Java:
+In this program, we define two interfaces: Vehicle and ElectricVehicle. The Car class implements both interfaces and provides concrete implementations for their methods. 
+Finally, in the main method, we create an instance of Car and demonstrate its behavior.
+
+
+
+// Interface for vehicles
+interface Vehicle {
+    void start();
+    void stop();
+}
+
+// Interface for electric vehicles
+interface ElectricVehicle {
+    void charge();
+}
+
+// Car class implementing both Vehicle and ElectricVehicle interfaces
+class Car implements Vehicle, ElectricVehicle {
+    @Override
+    public void start() {
+        System.out.println("Car started.");
+    }
+
+    @Override
+    public void stop() {
+        System.out.println("Car stopped.");
+    }
+
+    @Override
+    public void charge() {
+        System.out.println("Car charging.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Car myCar = new Car();
+        myCar.start();   // Output: Car started.
+        myCar.stop();    // Output: Car stopped.
+        myCar.charge();  // Output: Car charging.
+    }
+}
+
