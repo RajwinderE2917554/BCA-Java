@@ -10,3 +10,282 @@ Give examples demonstrating the use of this to refer to instance variables and m
 Task-2: 
 a.	Recall the basic principles of exception handling in Java, give example of try-catch blocks and the handling of checked exception. 
 b.  Write a program to demonstrate Interface and implements multiple interface in a java.
+
+
+
+
+
+
+
+Task-1:
+Imagine you are developing a Java application for a car rental agency. In this system, you have a class called Vehicle representing general properties and behaviors of vehicles.
+Additionally, you have a subclass called Car, which extends the Vehicle class and adds specific features related to cars, such as the number of doors and the type of fuel.
+While implementing methods in the Car class, you find yourself needing to differentiate between local variables, instance variables, and superclass variables.
+
+public class Vehicle {
+    private String licensePlate;
+    private String make;
+    private String model;
+    private int year;
+
+    public Vehicle(String licensePlate, String make, String model, int year) {
+        this.licensePlate = licensePlate;
+        this.make = make;
+        this.model = model;
+        this.year = year;
+    }
+
+    //Override
+    public String toString() {
+        return "Vehicle [licensePlate=" + licensePlate + ", make=" + make + ", model=" + model + ", year=" + year + "]";
+    }
+}
+
+public class Car extends Vehicle {
+    private int numberOfDoors;
+    private String fuelType;
+
+    public Car(String licensePlate, String make, String model, int year, int numberOfDoors, String fuelType) {
+        super(licensePlate, make, model, year);
+        this.numberOfDoors = numberOfDoors;
+        this.fuelType = fuelType;
+    }
+
+    //Override
+    public String toString() {
+        return "Car [numberOfDoors=" + numberOfDoors + ", fuelType=" + fuelType + ", " + super.toString() + "]";
+    }
+}
+
+Local Variables:
+
+Local variables are declared within methods, constructors, or blocks.
+They exist only within the scope of the method, constructor, or block in which they are declared.
+Local variables must be initialized before they are used.
+They are not accessible from outside the method, constructor, or block where they are declared.
+
+public void accelerate() {
+    int speed = 10; 
+    System.out.println("Accelerating to " + speed + " mph");
+}
+
+Instance Variables:
+
+Instance variables are declared within a class but outside any method, constructor, or block.
+They are also known as member variables because they are associated with instances (objects) of the class.
+Each instance of the class has its own copy of instance variables.
+They are initialized with default values if not explicitly initialized.
+Instance variables are accessible throughout the class.
+
+public class Car extends Vehicle {
+    private int numberOfDoors; 
+    private String fuelType;   
+}
+Superclass Variables:
+
+Superclass variables are fields inherited from a superclass.
+They are accessible in the subclass as if they were declared in the subclass itself.
+Subclasses can override superclass variables if they have the same name.
+
+public class Vehicle {
+    protected String manufacturer; 
+    protected double price;        
+}
+
+public class Car extends Vehicle {
+    private int numberOfDoors;     
+    private String fuelType;       
+    
+    // Accessing superclass variables
+    public void displayInfo() {
+        System.out.println("Manufacturer: " + manufacturer);
+        System.out.println("Price: " + price);
+    }
+}
+
+1.	Explain the role and usage of the super keyword in Java. Provide examples illustrating how super can be used to access superclass members and invoke superclass constructors within a subclass like Car.
+
+To access superclass variables and methods: When a subclass inherits variables and methods from its superclass, it can access them directly using the super keyword. This is useful when there is a name conflict
+between a variable or method in the subclass and the superclass.
+public class Vehicle {
+    protected String licensePlate;
+ public Vehicle(String licensePlate) {
+        this.licensePlate = licensePlate;
+    }
+public String getLicensePlate() {
+        return licensePlate;
+    }
+}
+
+public class Car extends Vehicle {
+    private int numberOfDoors;
+
+    public Car(String licensePlate, int numberOfDoors) {
+        super(licensePlate);
+        this.numberOfDoors = numberOfDoors;
+    }
+public String getLicensePlate() 
+        return super.getLicensePlate();
+    }
+}
+To invoke superclass constructors: When a subclass is instantiated, its constructor automatically calls the constructor of its superclass using the super() keyword (if no explicit constructor call is made). 
+The superclass constructor can be used to initialize the state of the superclass before the subclass constructor initializes the state of the subclass.
+Here's an example:
+
+public class Vehicle {
+    protected String licensePlate;
+
+    public Vehicle(String licensePlate) {
+        this.licensePlate = licensePlate;
+        System.out.println("Vehicle constructor called");
+    }
+}
+
+public class Car extends Vehicle {
+    private int numberOfDoors;
+
+    public Car(String licensePlate, int numberOfDoors) {
+        // Call the Vehicle constructor with the licensePlate argument
+        super(licensePlate);
+        this.numberOfDoors = numberOfDoors;
+        System.out.println("Car constructor called");
+    }
+}
+
+2.	Describe the significance of the this keyword in Java and how it differs from super. 
+
+this Keyword:
+
+The this keyword refers to the current instance of the class.
+It is primarily used to:
+Differentiate between instance variables and parameters/local variables with the same name.
+Invoke constructors of the same class.
+Pass the current object as a parameter to other methods.
+For Example 
+public class Car {
+    private String model;
+    
+    public Car(String model) {
+        this.model = model; // 'this.model' refers to the instance variable, 'model' refers to the parameter
+    }
+    
+    public void displayModel() {
+        System.out.println("Model: " + this.model); // Using 'this' is optional here, but it clarifies that 'model' is an instance variable
+    }
+}
+super Keyword:
+
+The super keyword refers to the superclass of the current class.
+It is primarily used to:
+Access superclass members (fields, methods, constructors) that are hidden or overridden by the subclass.
+Invoke superclass constructors.
+For Example
+public class Car extends Vehicle {
+    private int numberOfDoors;
+    
+    public Car(String model, int numberOfDoors) {
+        super(model); 
+        this.numberOfDoors = numberOfDoors;
+    }
+    
+    public void displayInfo() {
+        super.displayInfo(); 
+        System.out.println("Number of doors: " + numberOfDoors);
+    }
+}
+
+
+Task-2: 
+a.	Recall the basic principles of exception handling in Java, give example of try-catch blocks and the handling of checked exception. 
+
+Try-Catch Blocks:
+
+The try block is used to enclose the code that might throw an exception.
+The catch block is used to handle the exception if it occurs.
+You can have multiple catch blocks to handle different types of exceptions.
+After a catch block executes, control transfers to the code following the try-catch block.
+Optionally, you can use a finally block to execute code that should always run, regardless of whether an exception occurred.
+
+Checked Exceptions:
+
+Checked exceptions are exceptions that the compiler forces you to handle, either by using a try-catch block or by declaring the method that might throw them with a throws clause.
+Examples of checked exceptions include IOException, SQLException, etc.
+If you use a method that throws a checked exception, you must either catch it or declare it to be thrown by the method.
+Here's an example demonstrating the use of try-catch blocks to handle a checked exception (IOException):
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class FileHandler {
+    public static void main(String[] args) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("example.txt"));
+            String line = reader.readLine();
+            System.out.println("First line of the file: " + line);
+            reader.close();
+        } catch (IOException e) {
+            System.err.println("An error occurred while reading the file: " + e.getMessage());
+        } finally {
+            System.out.println("Finished processing the file.");
+        }
+    }
+}
+
+b.  Write a program to demonstrate Interface and implements multiple interface in a java.
+
+interface Shape {
+    double calculateArea(); // Method to calculate area
+}
+
+interface Drawable {
+    void draw(); 
+}
+class Circle implements Shape, Drawable {
+    private double radius;
+
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+
+    @Override
+    public double calculateArea() {
+        return Math.PI * radius * radius; 
+    }
+
+    @Override
+    public void draw() {
+        System.out.println("Drawing a circle with radius " + radius);
+    }
+}
+class Rectangle implements Shape, Drawable {
+    private double width;
+    private double height;
+
+    public Rectangle(double width, double height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    //Override
+    public double calculateArea() {
+        return width * height; 
+    }
+
+    //Override
+    public void draw() {
+        System.out.println("Drawing a rectangle with width " + width + " and height " + height);
+    }
+}
+
+public class InterfaceExample {
+    public static void main(String[] args) {
+        Circle circle = new Circle(5);
+        Rectangle rectangle = new Rectangle(4, 6)
+        System.out.println("Area of circle: " + circle.calculateArea());
+        circle.draw();
+
+        System.out.println("Area of rectangle: " + rectangle.calculateArea());
+        rectangle.draw();
+    }
+}
