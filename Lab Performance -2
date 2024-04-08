@@ -10,3 +10,172 @@ Give examples demonstrating the use of this to refer to instance variables and m
 Task-2: 
 a.	Recall the basic principles of exception handling in Java, give example of try-catch blocks and the handling of checked exception. 
 b.  Write a program to demonstrate Interface and implements multiple interface in a java.
+
+
+Task 1:-
+Sol1-
+Role of Super keyword:-
+1- Accessing Super class members.
+2- Invoking Super class constructor.
+3- Accessing Super class constructor.
+4- Can not be used as static.
+5- Must be the first statement in every method, constructor and any block.
+
+//To call Super class method and variable.
+class Vehicle {
+    int speed = 50;
+
+    void displaySpeed() {
+        System.out.println("Speed = " + speed);
+    }
+}
+
+public class Car extends Vehicle {
+    int speed = 100;
+    int nod=4;
+    void displaySpeed() {
+        super.displaySpeed(); //Accessing Super class method
+        System.out.println("Car Speed = " + speed);
+        System.out.println("Vehicle Speed = " + super.speed); // Accessing Super class variable
+    }
+
+    public static void main(String args[]) {
+        Car obj = new Car();
+        obj.displaySpeed();
+    }
+}
+
+//To call Super class constructor
+class Vehicle {
+    int speed;
+
+    Vehicle(int speed) {
+        this.speed = speed;
+        System.out.println("Speed = " + speed);
+    }
+}
+
+public class Car extends Vehicle {
+    int numberOfDoors;
+
+    Car(int speed, int doors) {
+        super(speed); // Invoking super class constructor
+        numberOfDoors = doors;
+        System.out.println("No. of doors = " + doors);
+    }
+
+    public static void main(String args[]) {
+        Car obj = new Car(60, 4); // Passing speed and doors arguments
+    }
+}
+
+Sol2.
+Significance of This keyword:-
+1- this refers to the current instance of the class in which it appears.
+2- It is commonly used within class methods and constructors to refer to the current object.
+3- It can be used to differentiate between instance variables and local variables if they share the same name.
+
+Super Keyword:-
+1- super is a reference to the immediate parent class of the current object.
+2- It's used to access members (variables or methods) of the superclass, which might be overridden in the subclass.
+3- It can also be used to invoke the superclass's constructor from a subclass constructor.
+
+//Use of this keyword:-
+package JavaLabPro;
+
+public class thisKeyword {
+    private int x;
+
+    public thisKeyword(int x) {
+        this.x = x;
+    }
+
+    public void printX() {
+        System.out.println("The value of x is: " + this.x);
+    }
+
+    public void updateX(int newX) {
+        this.x = newX;
+        System.out.println("Updated value of x using this: " + this.x);
+    }
+
+    public static void main(String[] args) {
+        thisKeyword obj = new thisKeyword(5);
+        obj.printX();
+        obj.updateX(10);
+    }
+}
+
+Scenarios where using this is necessary for disambiguation or clarification :-
+1- Constructor Overloading: When you have multiple constructors in a class, each with parameters of the same name as instance variables, using "this" can help differentiate between the constructor parameters and the instance variables.
+2- Setter Methods: When a setter method has a parameter name that conflicts with an instance variable name, "this" can be used to refer to the instance variable.
+3- Method Parameters and Instance Variables with Same Name: When method parameters have the same name as instance variables, "this" can help distinguish between them.
+4- Method Chaining: When invoking methods within the same class and the method names shadow instance variable names, "this" can clarify that you're referring to the method and not the variable.
+5- Inner Classes and Anonymous Inner Classes: Inside an inner class or an anonymous inner class, "this" refers to the instance of the inner class. To refer to the instance of the outer class, you can use "OuterClassName.this".
+
+
+Task 2:-
+Sol1.
+Basic Principles of Exception Handling in Java:-
+1- Try-Catch Blocks: The try block encloses the code that might throw an exception. The catch block catches and handles the exception if it occurs. Multiple catch blocks can be used to handle different types of exceptions.
+2- Throwing Exceptions: The throw statement is used to manually throw an exception. This is useful when a method encounters an error condition.
+3- Checked and Unchecked Exceptions: Checked exceptions are the exceptions that must be either caught or declared in the method's throws clause. Unchecked exceptions (RuntimeExceptions and their subclasses) do not need to be declared or caught explicitly.
+4- Finally Block: The finally block is used to execute code that should always run, regardless of whether an exception occurred or not. It's often used for resource cleanup, such as closing files or releasing database connections.
+5- Try-With-Resources: Introduced in Java 7, the try-with-resources statement automatically closes resources like files, streams, or database connections when they're no longer needed. Resources declared within the parentheses of the try statement are automatically closed at the end of the block, even if an exception occurs.
+
+//Eg. of try catch block
+public class ExceptionHandling {
+
+	public static void main(String[] args) {
+		try {
+			int data=100/0;
+			int arr[]=new int[5];
+			arr[6]=10;
+		}
+		catch(ArithmeticException e) {
+			System.out.println("Exception occured "+e);
+		}
+		catch(Exception e1) {
+			System.out.println("Exception occurred "+e1);
+		}
+		System.out.print("Task 2");
+	}
+
+}
+
+Sol2.
+
+interface Interface1 {
+	void method1();
+}
+
+//Second interface
+interface Interface2 {
+	void method2();
+}
+
+//Class implementing both interfaces
+class MyClass implements Interface1, Interface2 {
+
+	public void method1() {
+		System.out.println("Method 1 implementation");
+	}
+
+
+	public void method2() {
+		System.out.println("Method 2 implementation");
+	}
+	
+	public void myMethod() {
+		System.out.println("My custom method");
+	}
+}
+
+public class Main {
+	public static void main(String[] args) {
+		MyClass obj = new MyClass();
+		obj.method1();
+		obj.method2();
+		obj.myMethod();
+	}
+}
